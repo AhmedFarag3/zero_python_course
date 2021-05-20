@@ -1,14 +1,17 @@
-import numpy as np
+import random 
 from numpy.lib.format import header_data_from_array_1_0
 def main():
-    
+
     lines = []
-    iteration_list = []
     temp_list = []
     humidity_list=[]
     pressure_list = []
-    
-    with open('loglistener.txt') as f:
+    number_of_sensors = 5
+    sum = 0
+    #mean and standard deviation
+    mu = 0
+    sigma = 1
+    with open('scenario1_output.txt') as f:
         lines = f.readlines()
 
         for line in lines: 
@@ -23,12 +26,20 @@ def main():
                 temp     = float(listtostring[2])
                 humidity = float(listtostring[5])
                 pressure = float(listtostring[8])
-                iteration_list.append(iteration_number)
-                temp_list.append(temp)
-                humidity_list.append(humidity)
-                pressure_list.append(pressure)      
-                print(temp_list)
-                #print(f"iteration_number is : {iteration_number} temp is {temp} Humidity is {humidity}  pressure is {pressure}")
+                
+      
+
+                temp_list.append((temp/number_of_sensors)+random.gauss(mu, sigma))
+                humidity_list.append((humidity/number_of_sensors)+random.gauss(mu, sigma))
+                pressure_list.append((pressure/number_of_sensors)+random.gauss(mu, sigma))
+
+        smallest = min(temp_list)
+        largest  = max(temp_list)
+        for i in temp_list :
+            sum = sum + i  
+        average = sum /30
+        print(average)
+               
 
 
 main()
